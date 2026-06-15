@@ -36,13 +36,6 @@ export default function LaunchAccessPage() {
           <a href="/" aria-label="HappyTides home">
             <BrandLogo />
           </a>
-          <div
-            className="flex items-center gap-1.5 text-sm font-medium"
-            style={{ color: "#1e3a5f" }}
-          >
-            <Lock className="h-4 w-4" strokeWidth={2} />
-            <span>Secure connection</span>
-          </div>
         </div>
       </header>
 
@@ -95,7 +88,7 @@ export default function LaunchAccessPage() {
                 fontSize: "13.001px",
                 color: "#1e3a5f",
                 marginLeft: "115px",
-                marginRight: "-90.001px",
+                marginRight: "-66.001px",
                 marginTop: "12.001px",
                 lineHeight: "1.63em",
               }}
@@ -126,10 +119,10 @@ export default function LaunchAccessPage() {
                   />
                 </span>
                 <div className="min-w-0 leading-tight">
-                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a" }}>
+                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a", marginLeft: i === 3 ? "-5px" : "0px" }}>
                     {top}
                   </p>
-                  <p className="text-[11px]" style={{ color: "#64748b" }}>
+                  <p className="text-[11px]" style={{ color: "#64748b", marginLeft: i === 3 ? "-3px" : "0px" }}>
                     {bottom}
                   </p>
                 </div>
