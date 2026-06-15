@@ -36,6 +36,13 @@ export default function LaunchAccessPage() {
           <a href="/" aria-label="HappyTides home">
             <BrandLogo />
           </a>
+          <div
+            className="flex items-center gap-1.5 text-sm font-medium"
+            style={{ color: "#1e3a5f" }}
+          >
+            <Lock className="h-4 w-4" strokeWidth={2} />
+            <span>Secure connection</span>
+          </div>
         </div>
       </header>
 

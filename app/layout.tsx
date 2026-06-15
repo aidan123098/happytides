@@ -20,12 +20,25 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'HappyTides™',
+  title: 'HappyTides — Advanced Research Peptides',
   description:
-    'Join the waitlist for exclusive early access to our launch.',
+    'Research-use peptide materials with Certificate of Analysis on every batch. Batch documentation, COA access, and clear labeling you can rely on.',
   generator: 'v0.app',
   icons: {
-    icon: '/favicon.png',
+    icon: [
+      {
+        url: '/icon-light-32x32.png',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/icon-dark-32x32.png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
     apple: '/apple-icon.png',
   },
 }
