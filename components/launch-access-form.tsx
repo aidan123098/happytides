@@ -1,17 +1,46 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, Mail, Phone, ShieldCheck, User, Tag } from "lucide-react"
+import { ArrowRight, Mail, Phone, ShieldCheck, User, Tag, AlertCircle } from "lucide-react"
 
 export function LaunchAccessForm() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
   const [form, setForm] = useState({ name: "", email: "", phone: "", affiliateCode: "" })
+
+  function validateForm() {
+    const errors: Record<string, string> = {}
+
+    if (!form.name.trim()) {
+      errors.name = "Please enter your full name"
+    }
+
+    if (!form.email.trim()) {
+      errors.email = "Please enter your email address"
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      errors.email = "Please enter a valid email address (example: you@example.com)"
+    }
+
+    if (!form.phone.trim()) {
+      errors.phone = "Please enter your phone number"
+    } else if (form.phone.length < 10) {
+      errors.phone = "Please enter a complete phone number (at least 10 digits)"
+    }
+
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError("")
+
+    if (!validateForm()) {
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -108,6 +137,7 @@ export function LaunchAccessForm() {
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className="rounded-3xl p-6"
       style={{
         border: "1px solid #e5e7eb",
@@ -131,14 +161,29 @@ export function LaunchAccessForm() {
               id="la-name"
               name="name"
               type="text"
-              required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e) => {
+                setForm({ ...form, name: e.target.value })
+                if (validationErrors.name) {
+                  setValidationErrors({ ...validationErrors, name: "" })
+                }
+              }}
               placeholder="Your full name"
               className={inputClass}
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                borderColor: validationErrors.name ? "#fecaca" : "#e5e7eb",
+              }}
             />
           </div>
+          {validationErrors.name && (
+            <div className="mt-2 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#dc2626" }} />
+              <span className="text-sm" style={{ color: "#dc2626" }}>
+                {validationErrors.name}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Email */}
@@ -156,14 +201,29 @@ export function LaunchAccessForm() {
               id="la-email"
               name="email"
               type="email"
-              required
               value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onChange={(e) => {
+                setForm({ ...form, email: e.target.value })
+                if (validationErrors.email) {
+                  setValidationErrors({ ...validationErrors, email: "" })
+                }
+              }}
               placeholder="you@example.com"
               className={inputClass}
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                borderColor: validationErrors.email ? "#fecaca" : "#e5e7eb",
+              }}
             />
           </div>
+          {validationErrors.email && (
+            <div className="mt-2 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#dc2626" }} />
+              <span className="text-sm" style={{ color: "#dc2626" }}>
+                {validationErrors.email}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Phone */}
@@ -181,17 +241,30 @@ export function LaunchAccessForm() {
               id="la-phone"
               name="phone"
               type="tel"
-              required
               value={form.phone}
               onChange={(e) => {
                 const numbersOnly = e.target.value.replace(/\D/g, "")
                 setForm({ ...form, phone: numbersOnly })
+                if (validationErrors.phone) {
+                  setValidationErrors({ ...validationErrors, phone: "" })
+                }
               }}
               placeholder="(555) 123-4567"
               className={inputClass}
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                borderColor: validationErrors.phone ? "#fecaca" : "#e5e7eb",
+              }}
             />
           </div>
+          {validationErrors.phone && (
+            <div className="mt-2 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#dc2626" }} />
+              <span className="text-sm" style={{ color: "#dc2626" }}>
+                {validationErrors.phone}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Affiliate Code */}
