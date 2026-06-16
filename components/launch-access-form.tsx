@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowRight, Mail, Phone, ShieldCheck, User, Tag, AlertCircle } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { ArrowRight, Mail, Phone, ShieldCheck, User, Tag, AlertCircle, CheckCircle2, Loader2 } from "lucide-react"
 
 export function LaunchAccessForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -9,6 +9,48 @@ export function LaunchAccessForm() {
   const [error, setError] = useState("")
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
   const [form, setForm] = useState({ name: "", email: "", phone: "", affiliateCode: "" })
+
+  // Affiliate code validation state
+  const [codeStatus, setCodeStatus] = useState<"idle" | "checking" | "valid" | "invalid">("idle")
+  const [codeMessage, setCodeMessage] = useState("")
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Debounce-validate affiliate code whenever it changes
+  useEffect(() => {
+    const code = form.affiliateCode.trim()
+
+    if (!code) {
+      setCodeStatus("idle")
+      setCodeMessage("")
+      return
+    }
+
+    setCodeStatus("checking")
+    setCodeMessage("")
+
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/partner-codes?code=${encodeURIComponent(code)}`)
+        const data = await res.json()
+        if (data.valid) {
+          setCodeStatus("valid")
+          setCodeMessage("Affiliate code applied.")
+        } else {
+          setCodeStatus("invalid")
+          setCodeMessage(data.error || "That affiliate code doesn't exist.")
+        }
+      } catch {
+        setCodeStatus("idle")
+        setCodeMessage("")
+      }
+    }, 600)
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [form.affiliateCode])
 
   function validateForm() {
     const errors: Record<string, string> = {}
@@ -298,9 +340,51 @@ export function LaunchAccessForm() {
               onChange={(e) => setForm({ ...form, affiliateCode: e.target.value })}
               placeholder="Enter your affiliate code"
               className={inputClass}
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                borderColor:
+                  codeStatus === "valid"
+                    ? "#86efac"
+                    : codeStatus === "invalid"
+                    ? "#fecaca"
+                    : "#e5e7eb",
+                paddingRight: codeStatus !== "idle" ? "2.75rem" : "1rem",
+              }}
             />
+            {/* Status icon on the right */}
+            {codeStatus === "checking" && (
+              <Loader2
+                className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 animate-spin"
+                style={{ color: "#94a3b8" }}
+              />
+            )}
+            {codeStatus === "valid" && (
+              <CheckCircle2
+                className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2"
+                style={{ color: "#16a34a" }}
+              />
+            )}
+            {codeStatus === "invalid" && (
+              <AlertCircle
+                className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2"
+                style={{ color: "#dc2626" }}
+              />
+            )}
           </div>
+          {/* Feedback message */}
+          {codeStatus === "valid" && (
+            <p className="mt-1.5 text-sm font-medium" style={{ color: "#16a34a" }}>
+              {codeMessage}
+            </p>
+          )}
+          {codeStatus === "invalid" && (
+            <div className="mt-2 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#dc2626" }} />
+              <span className="text-sm" style={{ color: "#dc2626" }}>
+                {codeMessage}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Submit */}

@@ -12,6 +12,36 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 const CODE_REGEX = /^[a-zA-Z0-9]{3,20}$/
 
+// GET /api/partner-codes?code=XYZ — validate whether a code exists
+export async function GET(request: NextRequest) {
+  const code = request.nextUrl.searchParams.get("code")?.trim()
+
+  if (!code) {
+    return NextResponse.json({ valid: false, error: "No code provided." }, { status: 400 })
+  }
+
+  if (!CODE_REGEX.test(code)) {
+    return NextResponse.json({ valid: false, error: "That doesn't look like a valid affiliate code." })
+  }
+
+  const { data, error } = await supabase
+    .from("partner_codes")
+    .select("id, code")
+    .ilike("code", code)
+    .maybeSingle()
+
+  if (error) {
+    console.error("[v0] Code lookup error:", error)
+    return NextResponse.json({ valid: false, error: "Could not verify code." }, { status: 500 })
+  }
+
+  if (!data) {
+    return NextResponse.json({ valid: false, error: "That affiliate code doesn't exist." })
+  }
+
+  return NextResponse.json({ valid: true, code: data.code })
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
