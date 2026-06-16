@@ -9,9 +9,9 @@ import { BrandLogo } from "@/components/brand-logo"
 import { LaunchAccessForm } from "@/components/launch-access-form"
 
 const trustItems = [
-  { icon: Flag, top: "Made in", bottom: "USA" },
-  { icon: FileText, top: "Lab", bottom: "tested" },
-  { icon: Lock, top: "Secure", bottom: "sign up" },
+  { icon: null, emoji: "🇺🇸", top: "Made in", bottom: "USA" },
+  { icon: FileText, emoji: null, top: "Lab", bottom: "tested" },
+  { icon: Lock, emoji: null, top: "Secure", bottom: "sign up" },
 ]
 
 const footerItems = [
@@ -101,23 +101,30 @@ export default function LaunchAccessPage() {
 
         {/* Trust row */}
         <section className="px-3 py-5" style={{ backgroundColor: "#ffffff" }}>
-          <ul className="flex items-stretch justify-center gap-4 overflow-hidden">
-            {trustItems.map(({ icon: Icon, top, bottom }, i) => (
+          <ul className="flex items-stretch justify-center gap-6">
+            {trustItems.map(({ icon: Icon, emoji, top, bottom }) => (
               <li
                 key={top}
-                className="flex flex-1 items-center gap-2 px-1 max-w-xs"
+                className="flex items-center gap-2"
+                style={{ minWidth: "80px" }}
               >
-                <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#dfe8f5" }}
-                >
-                  <Icon
-                    className="h-4 w-4"
-                    strokeWidth={1.8}
-                    style={{ color: "#1e3a5f" }}
-                  />
-                </span>
-                <div className="min-w-0 leading-tight">
+                {emoji ? (
+                  <span className="text-2xl flex h-8 w-8 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: "#dfe8f5" }}>
+                    {emoji}
+                  </span>
+                ) : (
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+                    style={{ backgroundColor: "#dfe8f5" }}
+                  >
+                    <Icon
+                      className="h-4 w-4"
+                      strokeWidth={1.8}
+                      style={{ color: "#1e3a5f" }}
+                    />
+                  </span>
+                )}
+                <div className="leading-tight">
                   <p className="text-[11px] font-semibold" style={{ color: "#0f172a" }}>
                     {top}
                   </p>
