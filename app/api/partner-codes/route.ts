@@ -117,6 +117,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Also save to waitlist table to track all signups
+    if (normalizedEmail) {
+      const { error: waitlistError } = await supabase
+        .from("waitlist")
+        .insert([
+          {
+            full_name:
+              full_name && typeof full_name === "string"
+                ? full_name.trim()
+                : null,
+            email: normalizedEmail,
+            phone: phone && typeof phone === "string" ? phone.trim() : null,
+            affiliate_code: normalizedCode,
+          },
+        ])
+        .select()
+        .single()
+
+      if (waitlistError) {
+        console.error("[v0] Waitlist insert error (non-fatal):", waitlistError)
+        // Non-fatal error — partner code was already created successfully
+      }
+    }
+
     return NextResponse.json(
       {
         success: true,
