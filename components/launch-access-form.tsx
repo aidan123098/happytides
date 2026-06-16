@@ -114,6 +114,16 @@ export function LaunchAccessForm() {
         return
       }
 
+      // Save identity to localStorage so the affiliate partner page can skip Step 1
+      try {
+        localStorage.setItem(
+          "ht_partner_identity",
+          JSON.stringify({ name: form.name, email: form.email, phone: form.phone })
+        )
+      } catch {
+        // ignore storage errors
+      }
+
       setSubmitted(true)
       setLoading(false)
     } catch (err) {
