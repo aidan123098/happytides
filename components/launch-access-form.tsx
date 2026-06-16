@@ -179,6 +179,14 @@ export function LaunchAccessForm() {
           </span>
           .
         </p>
+        <a
+          href="/affiliates"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 text-base font-semibold transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "#1e3a5f", color: "#ffffff" }}
+        >
+          Become an affiliate?
+          <ArrowRight className="h-4 w-4" />
+        </a>
         <button
           type="button"
           onClick={() => {
@@ -186,10 +194,10 @@ export function LaunchAccessForm() {
             setError("")
             setForm({ name: "", email: "", phone: "", affiliateCode: "" })
           }}
-          className="mt-6 text-sm font-semibold underline-offset-4 hover:underline"
-          style={{ color: "#1e3a5f" }}
+          className="mt-4 text-sm font-semibold underline-offset-4 hover:underline"
+          style={{ color: "#64748b" }}
         >
-          Submit another request
+          Submit another form
         </button>
       </div>
     )
