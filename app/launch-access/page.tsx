@@ -1,6 +1,7 @@
 import {
   ClipboardList,
   FileText,
+  Flag,
   Lock,
   ShieldCheck,
 } from "lucide-react"
@@ -8,7 +9,7 @@ import { BrandLogo } from "@/components/brand-logo"
 import { LaunchAccessForm } from "@/components/launch-access-form"
 
 const trustItems = [
-  { icon: ShieldCheck, top: "Made in", bottom: "USA" },
+  { icon: Flag, top: "Made in", bottom: "USA" },
   { icon: FileText, top: "Lab", bottom: "tested" },
   { icon: Lock, top: "Secure", bottom: "sign up" },
 ]
@@ -100,12 +101,11 @@ export default function LaunchAccessPage() {
 
         {/* Trust row */}
         <section className="px-3 py-5" style={{ backgroundColor: "#ffffff" }}>
-          <ul className="flex items-stretch overflow-hidden">
+          <ul className="flex items-stretch justify-center gap-4 overflow-hidden">
             {trustItems.map(({ icon: Icon, top, bottom }, i) => (
               <li
                 key={top}
-                className="flex flex-1 items-center gap-2 px-1"
-                style={i > 0 ? { borderLeft: "1px solid #e5e7eb" } : {}}
+                className="flex flex-1 items-center gap-2 px-1 max-w-xs"
               >
                 <span
                   className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
@@ -118,10 +118,10 @@ export default function LaunchAccessPage() {
                   />
                 </span>
                 <div className="min-w-0 leading-tight">
-                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a", marginLeft: i === 3 ? "-5px" : "0px" }}>
+                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a" }}>
                     {top}
                   </p>
-                  <p className="text-[11px]" style={{ color: "#64748b", marginLeft: i === 3 ? "-3px" : "0px" }}>
+                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a" }}>
                     {bottom}
                   </p>
                 </div>
