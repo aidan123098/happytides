@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
+import { ArrowRight } from "lucide-react"
 import { BrandLogo } from "@/components/brand-logo"
 import { AffiliateHero } from "@/components/affiliate/affiliate-hero"
 import { AffiliateValue } from "@/components/affiliate/affiliate-value"
 import { AffiliateSteps } from "@/components/affiliate/affiliate-steps"
 import { AffiliatePayout } from "@/components/affiliate/affiliate-payout"
 import { AffiliateWhy } from "@/components/affiliate/affiliate-why"
-import { AffiliateApplyForm } from "@/components/affiliate/affiliate-apply-form"
 
 export const metadata: Metadata = {
   title: "Become an Affiliate — HappyTides™",
@@ -57,9 +57,17 @@ export default function AffiliatesPage() {
             className="mx-auto mb-8 mt-5 max-w-md text-center text-lg leading-relaxed"
             style={{ color: "#475569" }}
           >
-            Tell us a bit about yourself and we&apos;ll send your referral partner details.
+            Create your partner account, choose a unique code, and get your referral
+            link in seconds.
           </p>
-          <AffiliateApplyForm />
+          <a
+            href="/affiliates/partner"
+            className="group mx-auto flex w-full max-w-md items-center justify-center gap-3 rounded-full py-5 text-lg font-semibold transition-opacity hover:opacity-90"
+            style={{ backgroundColor: "#0f172a", color: "#ffffff" }}
+          >
+            Create Partner Account
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </a>
         </section>
 
         {/* Footer */}

@@ -1,9 +1,11 @@
 type BrandLogoProps = {
   className?: string
   showText?: boolean
+  variant?: "dark" | "light"
 }
 
-export function BrandLogo({ className, showText = true }: BrandLogoProps) {
+export function BrandLogo({ className, showText = true, variant = "dark" }: BrandLogoProps) {
+  const isLight = variant === "light"
   return (
     <div className={`flex items-center gap-2 ${className ?? ""}`}>
       <img
@@ -14,10 +16,16 @@ export function BrandLogo({ className, showText = true }: BrandLogoProps) {
       />
       {showText && (
         <div className="leading-none">
-          <span className="block font-serif text-2xl font-semibold tracking-tight text-navy" style={{ marginLeft: "-14px" }}>
+          <span
+            className={`block font-serif text-2xl font-semibold tracking-tight ${isLight ? "text-white" : "text-navy"}`}
+            style={{ marginLeft: "-14px" }}
+          >
             HappyTides
           </span>
-          <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.32em] text-navy/70" style={{ marginLeft: "-14px" }}>
+          <span
+            className={`mt-1 block text-[10px] font-medium uppercase tracking-[0.32em] ${isLight ? "text-white/70" : "text-navy/70"}`}
+            style={{ marginLeft: "-14px" }}
+          >
             Advanced Peptides
           </span>
         </div>

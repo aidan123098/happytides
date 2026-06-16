@@ -107,7 +107,7 @@ export function AffiliateHero() {
 
       {/* CTA */}
       <a
-        href="#apply"
+        href="/affiliates/partner"
         className="group relative z-10 mt-10 flex w-full items-center justify-center gap-3 rounded-full py-5 text-lg font-semibold transition-opacity hover:opacity-90"
         style={{ backgroundColor: "#0f172a", color: "#ffffff" }}
       >
