@@ -10,6 +10,15 @@ export function LaunchAccessForm() {
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
   const [form, setForm] = useState({ name: "", email: "", phone: "", affiliateCode: "" })
 
+  // Pre-fill affiliate code from ?ref= URL param
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const ref = params.get("ref")?.trim()
+    if (ref) {
+      setForm((prev) => ({ ...prev, affiliateCode: ref }))
+    }
+  }, [])
+
   // Affiliate code validation state
   const [codeStatus, setCodeStatus] = useState<"idle" | "checking" | "valid" | "invalid">("idle")
   const [codeMessage, setCodeMessage] = useState("")
