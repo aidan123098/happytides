@@ -1,7 +1,6 @@
 import {
   ClipboardList,
   FileText,
-  FlaskConical,
   Lock,
   ShieldCheck,
 } from "lucide-react"
@@ -9,10 +8,9 @@ import { BrandLogo } from "@/components/brand-logo"
 import { LaunchAccessForm } from "@/components/launch-access-form"
 
 const trustItems = [
-  { icon: ShieldCheck, top: "COA", bottom: "included" },
-  { icon: FileText, top: "Batch", bottom: "documented" },
-  { icon: Lock, top: "Secure", bottom: "signup" },
-  { icon: FlaskConical, top: "Research-use", bottom: "labeled" },
+  { icon: ShieldCheck, top: "Made in", bottom: "USA" },
+  { icon: FileText, top: "Lab", bottom: "tested" },
+  { icon: Lock, top: "Secure", bottom: "sign up" },
 ]
 
 const footerItems = [
