@@ -28,6 +28,13 @@ export const metadata: Metadata = {
     icon: '/favicon.png',
     apple: '/apple-icon.png',
   },
+  openGraph: {
+    images: [
+      {
+        url: '/apple-icon.png',
+      },
+    ],
+  },
 }
 
 export const viewport: Viewport = {
