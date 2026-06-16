@@ -48,7 +48,7 @@ export default function LaunchAccessPage() {
             backgroundSize: "cover",
             backgroundPosition: "45% 38%",
             minHeight: "360px",
-            marginLeft: "-125.001px",
+            marginLeft: "-108px",
           }}
         >
           {/* Text overlay — transparent background, positioned left */}
@@ -58,7 +58,7 @@ export default function LaunchAccessPage() {
               style={{
                 backgroundColor: "rgba(255,255,255,0.78)",
                 color: "#1e3a5f",
-                marginLeft: "115px",
+                marginLeft: "107px",
                 marginRight: "-48px",
                 textAlign: "center",
               }}
@@ -74,9 +74,9 @@ export default function LaunchAccessPage() {
                 fontSize: "29px",
                 lineHeight: "1.4001em",
                 color: "#0f172a",
-                marginLeft: "109.001px",
+                marginLeft: "95px",
                 marginRight: "-145.001px",
-                marginTop: "16.001px",
+                marginTop: "12px",
               }}
             >
               HappyTides<br />Launch Access
@@ -87,8 +87,8 @@ export default function LaunchAccessPage() {
               style={{
                 fontSize: "13.001px",
                 color: "#1e3a5f",
-                marginLeft: "115px",
-                marginRight: "-66.001px",
+                marginLeft: "99px",
+                marginRight: "-10px",
                 marginTop: "12.001px",
                 lineHeight: "1.63em",
               }}
