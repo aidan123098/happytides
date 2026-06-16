@@ -12,28 +12,12 @@ export function AffiliateHero() {
     <section
       className="relative overflow-hidden px-5 pb-12 pt-8"
       style={{
-        background: "linear-gradient(180deg, #ece9fb 0%, #e6edfb 55%, #e8f0fb 100%)",
+        backgroundImage: "url('/images/affiliate-hero-vials.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Floating vials */}
-      <img
-        src="/images/affiliate-vial-1.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute left-2 top-10 w-20 -rotate-12 opacity-95 sm:w-24"
-      />
-      <img
-        src="/images/affiliate-vial-2.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute right-1 top-6 w-20 rotate-6 opacity-95 sm:w-24"
-      />
-      <img
-        src="/images/affiliate-vial-3.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute right-4 top-32 w-24 -rotate-6 opacity-95 sm:w-28"
-      />
 
       {/* Referral value card */}
       <div className="relative z-10 mt-24 max-w-[20rem]">
