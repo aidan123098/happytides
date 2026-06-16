@@ -101,11 +101,12 @@ export default function LaunchAccessPage() {
 
         {/* Trust row */}
         <section className="px-3 py-5" style={{ backgroundColor: "#ffffff" }}>
-          <ul className="flex items-stretch justify-between">
-            {trustItems.map(({ icon: Icon, emoji, top, bottom }) => (
+          <ul className="flex items-stretch justify-between px-4">
+            {trustItems.map(({ icon: Icon, emoji, top, bottom }, i) => (
               <li
                 key={top}
                 className="flex items-center gap-2"
+                style={i > 0 ? { borderLeft: "1px solid #e5e7eb", paddingLeft: "16px" } : {}}
               >
                 {emoji ? (
                   <span className="text-2xl flex h-8 w-8 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: "#dfe8f5" }}>
