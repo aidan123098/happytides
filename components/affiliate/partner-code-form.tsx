@@ -88,12 +88,35 @@ export function PartnerCodeForm() {
   function handleIdentitySubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!validateIdentity()) return
+
+    // Save identity to waitlist immediately
+    saveToWaitlist()
+
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(identity))
     } catch {
       // ignore storage errors
     }
     setStep("code")
+  }
+
+  async function saveToWaitlist() {
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: identity.name,
+          email: identity.email,
+          phone: identity.phone,
+        }),
+      })
+      if (!response.ok) {
+        console.error("[v0] Waitlist save failed (non-fatal):", await response.json())
+      }
+    } catch (err) {
+      console.error("[v0] Waitlist save error (non-fatal):", err)
+    }
   }
 
   function handleCodeChange(value: string) {
