@@ -51,6 +51,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // If affiliate code provided, validate it exists in partner_codes
+    if (affiliate_code && affiliate_code.trim()) {
+      const { data: partner, error: partnerError } = await supabase
+        .from("partner_codes")
+        .select("id, code")
+        .ilike("code", affiliate_code.trim())
+        .maybeSingle()
+
+      if (partnerError) {
+        console.error("[v0] Affiliate code lookup error:", partnerError)
+      }
+
+      if (!partner) {
+        return NextResponse.json(
+          { error: "That affiliate code doesn't exist. Leave it blank or check the code and try again." },
+          { status: 400 }
+        )
+      }
+    }
+
     // Insert into waitlist table
     const { data, error } = await supabase.from("waitlist").insert([
       {

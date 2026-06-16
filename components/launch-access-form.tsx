@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowRight, Mail, Phone, ShieldCheck, User, Tag, AlertCircle } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { ArrowRight, Mail, Phone, ShieldCheck, User, Tag, AlertCircle, CheckCircle2, Loader2 } from "lucide-react"
 
 export function LaunchAccessForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -9,6 +9,57 @@ export function LaunchAccessForm() {
   const [error, setError] = useState("")
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
   const [form, setForm] = useState({ name: "", email: "", phone: "", affiliateCode: "" })
+
+  // Pre-fill affiliate code from ?ref= URL param
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const ref = params.get("ref")?.trim()
+    if (ref) {
+      setForm((prev) => ({ ...prev, affiliateCode: ref }))
+    }
+  }, [])
+
+  // Affiliate code validation state
+  const [codeStatus, setCodeStatus] = useState<"idle" | "checking" | "valid" | "invalid">("idle")
+  const [codeMessage, setCodeMessage] = useState("")
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Debounce-validate affiliate code whenever it changes
+  useEffect(() => {
+    const code = form.affiliateCode.trim()
+
+    if (!code) {
+      setCodeStatus("idle")
+      setCodeMessage("")
+      return
+    }
+
+    setCodeStatus("checking")
+    setCodeMessage("")
+
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/partner-codes?code=${encodeURIComponent(code)}`)
+        const data = await res.json()
+        if (data.valid) {
+          setCodeStatus("valid")
+          setCodeMessage("Affiliate code applied.")
+        } else {
+          setCodeStatus("invalid")
+          setCodeMessage(data.error || "That affiliate code doesn't exist.")
+        }
+      } catch {
+        setCodeStatus("idle")
+        setCodeMessage("")
+      }
+    }, 600)
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [form.affiliateCode])
 
   function validateForm() {
     const errors: Record<string, string> = {}
@@ -61,6 +112,16 @@ export function LaunchAccessForm() {
         setError(data.error || "Failed to submit. Please try again.")
         setLoading(false)
         return
+      }
+
+      // Save identity to localStorage so the affiliate partner page can skip Step 1
+      try {
+        localStorage.setItem(
+          "ht_partner_identity",
+          JSON.stringify({ name: form.name, email: form.email, phone: form.phone })
+        )
+      } catch {
+        // ignore storage errors
       }
 
       setSubmitted(true)
@@ -118,6 +179,14 @@ export function LaunchAccessForm() {
           </span>
           .
         </p>
+        <a
+          href="/affiliates"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 text-base font-semibold transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "#1e3a5f", color: "#ffffff" }}
+        >
+          Become an affiliate?
+          <ArrowRight className="h-4 w-4" />
+        </a>
         <button
           type="button"
           onClick={() => {
@@ -125,10 +194,10 @@ export function LaunchAccessForm() {
             setError("")
             setForm({ name: "", email: "", phone: "", affiliateCode: "" })
           }}
-          className="mt-6 text-sm font-semibold underline-offset-4 hover:underline"
-          style={{ color: "#1e3a5f" }}
+          className="mt-4 text-sm font-semibold underline-offset-4 hover:underline"
+          style={{ color: "#64748b" }}
         >
-          Submit another request
+          Submit another form
         </button>
       </div>
     )
@@ -269,16 +338,25 @@ export function LaunchAccessForm() {
 
         {/* Affiliate Code */}
         <div>
-          <label
-            htmlFor="la-affiliate"
-            className="block text-base font-semibold"
-            style={{ color: "#0f172a" }}
-          >
-            Affiliate Code{" "}
-            <span className="text-sm font-normal" style={{ color: "#64748b" }}>
-              (Optional)
-            </span>
-          </label>
+          <div className="flex items-center justify-between gap-2">
+            <label
+              htmlFor="la-affiliate"
+              className="block text-base font-semibold"
+              style={{ color: "#0f172a" }}
+            >
+              Affiliate Code{" "}
+              <span className="text-sm font-normal" style={{ color: "#64748b" }}>
+                (Optional)
+              </span>
+            </label>
+            <a
+              href="/affiliates"
+              className="shrink-0 text-sm font-semibold underline-offset-4 hover:underline"
+              style={{ color: "#1e3a5f" }}
+            >
+              Become an affiliate?
+            </a>
+          </div>
           <div className="relative mt-2">
             <Tag className="h-5 w-5" strokeWidth={1.8} style={iconStyle} />
             <input
@@ -289,9 +367,51 @@ export function LaunchAccessForm() {
               onChange={(e) => setForm({ ...form, affiliateCode: e.target.value })}
               placeholder="Enter your affiliate code"
               className={inputClass}
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                borderColor:
+                  codeStatus === "valid"
+                    ? "#86efac"
+                    : codeStatus === "invalid"
+                    ? "#fecaca"
+                    : "#e5e7eb",
+                paddingRight: codeStatus !== "idle" ? "2.75rem" : "1rem",
+              }}
             />
+            {/* Status icon on the right */}
+            {codeStatus === "checking" && (
+              <Loader2
+                className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 animate-spin"
+                style={{ color: "#94a3b8" }}
+              />
+            )}
+            {codeStatus === "valid" && (
+              <CheckCircle2
+                className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2"
+                style={{ color: "#16a34a" }}
+              />
+            )}
+            {codeStatus === "invalid" && (
+              <AlertCircle
+                className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2"
+                style={{ color: "#dc2626" }}
+              />
+            )}
           </div>
+          {/* Feedback message */}
+          {codeStatus === "valid" && (
+            <p className="mt-1.5 text-sm font-medium" style={{ color: "#16a34a" }}>
+              {codeMessage}
+            </p>
+          )}
+          {codeStatus === "invalid" && (
+            <div className="mt-2 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#dc2626" }} />
+              <span className="text-sm" style={{ color: "#dc2626" }}>
+                {codeMessage}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Submit */}
