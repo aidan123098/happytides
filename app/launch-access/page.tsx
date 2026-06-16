@@ -10,7 +10,7 @@ import { LaunchAccessForm } from "@/components/launch-access-form"
 
 const trustItems = [
   { icon: null, emoji: "🇺🇸", top: "Made in", bottom: "USA" },
-  { icon: FileText, emoji: null, top: "Lab", bottom: "tested" },
+  { icon: FileText, emoji: null, top: "3rd party", bottom: "lab tested" },
   { icon: Lock, emoji: null, top: "Secure", bottom: "sign up" },
 ]
 
@@ -106,7 +106,7 @@ export default function LaunchAccessPage() {
               <li
                 key={top}
                 className="flex items-center gap-2"
-                style={i > 0 ? { borderLeft: "1px solid #e5e7eb", paddingLeft: "16px" } : {}}
+                style={i > 0 ? { borderLeft: "1px solid #e5e7eb", paddingLeft: "12px" } : {}}
               >
                 {emoji ? (
                   <span className="text-2xl flex h-8 w-8 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: "#dfe8f5" }}>
