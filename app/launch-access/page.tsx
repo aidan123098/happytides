@@ -58,8 +58,9 @@ export default function LaunchAccessPage() {
               style={{
                 backgroundColor: "rgba(255,255,255,0.78)",
                 color: "#1e3a5f",
-                marginLeft: "107px",
+                marginLeft: "99px",
                 marginRight: "-48px",
+                marginTop: "-2px",
                 textAlign: "center",
               }}
             >
@@ -76,7 +77,7 @@ export default function LaunchAccessPage() {
                 color: "#0f172a",
                 marginLeft: "95px",
                 marginRight: "-145.001px",
-                marginTop: "12px",
+                marginTop: "9px",
               }}
             >
               HappyTides<br />Launch Access
