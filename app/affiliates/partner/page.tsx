@@ -58,17 +58,13 @@ export default function PartnerProgramPage() {
       </div>
 
       {/* Footer */}
-      <footer className="px-5 py-10" style={{ backgroundColor: "#101a33" }}>
-        <div className="mx-auto w-full max-w-2xl">
-          <BrandLogo variant="light" />
-          <p className="mt-5 max-w-md text-base leading-relaxed" style={{ color: "#94a3b8" }}>
-            Premium research-grade peptides for optimal controlled studies and
-            performance. Third-party tested with Certificate of Analysis.
-          </p>
-          <p className="mt-6 text-sm leading-relaxed" style={{ color: "#64748b" }}>
-            Research-use products only. Not for human or veterinary use.
-          </p>
-        </div>
+      <footer
+        className="px-5 py-8 text-center"
+        style={{ borderTop: "1px solid #e5e7eb", backgroundColor: "#ffffff" }}
+      >
+        <p className="text-sm leading-relaxed" style={{ color: "#64748b" }}>
+          HappyTides — Research-use products only. Not for human or veterinary use.
+        </p>
       </footer>
     </main>
   )
