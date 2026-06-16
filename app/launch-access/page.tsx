@@ -1,7 +1,7 @@
 import {
   ClipboardList,
   FileText,
-  FlaskConical,
+  Flag,
   Lock,
   ShieldCheck,
 } from "lucide-react"
@@ -9,10 +9,9 @@ import { BrandLogo } from "@/components/brand-logo"
 import { LaunchAccessForm } from "@/components/launch-access-form"
 
 const trustItems = [
-  { icon: ShieldCheck, top: "COA", bottom: "included" },
-  { icon: FileText, top: "Batch", bottom: "documented" },
-  { icon: Lock, top: "Secure", bottom: "signup" },
-  { icon: FlaskConical, top: "Research-use", bottom: "labeled" },
+  { icon: null, emoji: "🇺🇸", top: "Made in", bottom: "USA" },
+  { icon: FileText, emoji: null, top: "3rd party", bottom: "lab tested" },
+  { icon: Lock, emoji: null, top: "Secure", bottom: "sign up" },
 ]
 
 const footerItems = [
@@ -102,28 +101,34 @@ export default function LaunchAccessPage() {
 
         {/* Trust row */}
         <section className="px-3 py-5" style={{ backgroundColor: "#ffffff" }}>
-          <ul className="flex items-stretch overflow-hidden">
-            {trustItems.map(({ icon: Icon, top, bottom }, i) => (
+          <ul className="flex items-stretch justify-between px-4">
+            {trustItems.map(({ icon: Icon, emoji, top, bottom }, i) => (
               <li
                 key={top}
-                className="flex flex-1 items-center gap-2 px-1"
-                style={i > 0 ? { borderLeft: "1px solid #e5e7eb" } : {}}
+                className="flex items-center gap-2"
+                style={i > 0 ? { borderLeft: "1px solid #e5e7eb", paddingLeft: "12px" } : {}}
               >
-                <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: "#dfe8f5" }}
-                >
-                  <Icon
-                    className="h-4 w-4"
-                    strokeWidth={1.8}
-                    style={{ color: "#1e3a5f" }}
-                  />
-                </span>
-                <div className="min-w-0 leading-tight">
-                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a", marginLeft: i === 3 ? "-5px" : "0px" }}>
+                {emoji ? (
+                  <span className="text-2xl flex h-8 w-8 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: "#dfe8f5" }}>
+                    {emoji}
+                  </span>
+                ) : (
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+                    style={{ backgroundColor: "#dfe8f5" }}
+                  >
+                    <Icon
+                      className="h-4 w-4"
+                      strokeWidth={1.8}
+                      style={{ color: "#1e3a5f" }}
+                    />
+                  </span>
+                )}
+                <div className="leading-tight">
+                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a" }}>
                     {top}
                   </p>
-                  <p className="text-[11px]" style={{ color: "#64748b", marginLeft: i === 3 ? "-3px" : "0px" }}>
+                  <p className="text-[11px] font-semibold" style={{ color: "#0f172a" }}>
                     {bottom}
                   </p>
                 </div>
