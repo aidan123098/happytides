@@ -50,7 +50,7 @@ export function PartnerCodeForm() {
   const [copied, setCopied] = useState(false)
 
   const previewCode = code.trim() || "YOURCODE"
-  const referralLink = `https://happytides.com/launch-access?ref=${previewCode}`
+  const referralLink = `https://happytides.co/launch-access?ref=${previewCode}`
 
   // Restore saved identity from localStorage on mount
   useEffect(() => {
@@ -141,7 +141,7 @@ export function PartnerCodeForm() {
   }
 
   async function copyLink() {
-    const link = `https://happytides.com/launch-access?ref=${created}`
+    const link = `https://happytides.co/launch-access?ref=${created}`
     try {
       await navigator.clipboard.writeText(link)
       setCopied(true)
@@ -153,7 +153,7 @@ export function PartnerCodeForm() {
 
   // ── Success state ──────────────────────────────────────────────
   if (created) {
-    const finalLink = `https://happytides.com/launch-access?ref=${created}`
+    const finalLink = `https://happytides.co/launch-access?ref=${created}`
     return (
       <div className="rounded-3xl p-6" style={cardStyle}>
         <div
