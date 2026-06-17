@@ -20,6 +20,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://happytides.co'),
   title: 'HappyTides™',
   description:
     'Join the waitlist for exclusive early access to our launch.',
@@ -31,9 +32,13 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: '/apple-icon.png',
+        url: '/og-image.png',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
 }
 
