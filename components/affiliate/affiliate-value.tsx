@@ -1,11 +1,11 @@
 const stats = [
   {
-    value: "20%",
+    value: "30%",
     title: "First Order",
     desc: "Referral value on new researchers",
   },
   {
-    value: "10%",
+    value: "20%",
     title: "Recurring",
     desc: "On every reorder",
   },
