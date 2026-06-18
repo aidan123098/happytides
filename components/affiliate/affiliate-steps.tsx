@@ -12,7 +12,7 @@ const steps = [
   {
     num: "03",
     title: "Share in the value",
-    desc: "Receive 20% on first orders and 10% on recurring orders from researchers you refer",
+    desc: "Receive 30% on first orders and 20% on recurring orders from researchers you refer",
   },
   {
     num: "04",
