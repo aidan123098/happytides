@@ -51,19 +51,19 @@ export function AffiliateHero() {
             className="mt-2 text-4xl font-bold tracking-tight"
             style={{ color: "#0f172a" }}
           >
-            $2,500
+            $2,250
           </p>
           <div className="my-4 h-px w-full" style={{ backgroundColor: "#e5e7eb" }} />
           <div className="flex items-center justify-between text-sm">
             <span style={{ color: "#64748b" }}>10 referrals</span>
             <span className="font-semibold" style={{ color: "#16a34a" }}>
-              +$1,500
+              +$750
             </span>
           </div>
           <div className="mt-3 flex items-center justify-between text-sm">
             <span style={{ color: "#64748b" }}>Recurring</span>
             <span className="font-semibold" style={{ color: "#2563eb" }}>
-              +$1,000
+              +$1,500
             </span>
           </div>
         </div>

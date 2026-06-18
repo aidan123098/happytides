@@ -1,6 +1,6 @@
 const rows = [
-  { label: "10 new researchers × $250", value: "$500" },
-  { label: "50 recurring orders × $150", value: "$750" },
+  { label: "10 new researchers × $250", value: "$750" },
+  { label: "50 recurring orders × $150", value: "$1,500" },
 ]
 
 export function AffiliatePayout() {
@@ -46,7 +46,7 @@ export function AffiliatePayout() {
               Monthly referral value
             </span>
             <span className="text-2xl font-bold" style={{ color: "#0f172a" }}>
-              $1,250
+              $2,250
             </span>
           </div>
         </div>
